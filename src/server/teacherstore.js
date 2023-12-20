@@ -78,7 +78,7 @@ export const GetAllTopicByMajorId= async (accessToken) => {
 
 export const GetAllTopic= async (accessToken) => {
     try {
-      const response = await axios.get(`${api_url}/topic/filter`, {
+      const response = await axios.get(`${api_url}/topic/teacher`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -108,7 +108,7 @@ export const getTopicByMajorId = async (accessToken, majorId) => {
 
 export const getTopicByKeyword = async (accessToken, keyword) => {
   try {
-    const response = await axios.get(`${api_url}/topic/filter?keyword=${keyword}`, {
+    const response = await axios.get(`${api_url}/topic/teacher?majorId=${keyword}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

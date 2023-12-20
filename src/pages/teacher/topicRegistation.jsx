@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MainLayout from "../../components/layout/MainLayout";
 import {
   Box,
   Button,
-  Chip,
-  FormControlLabel,
   Grid,
-  Radio,
-  RadioGroup,
   TextField,
   Typography,
   Select,
@@ -215,7 +210,7 @@ function AccountManagement() {
                 required
               >
                 {Majors.map((MajorItem) => (
-                  <MenuItem key={MajorItem.id} value={MajorItem.name}>
+                  <MenuItem key={MajorItem.id} value={MajorItem.id}>
                     {MajorItem.name}
                   </MenuItem>
                 ))}
