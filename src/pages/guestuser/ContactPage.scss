@@ -1,0 +1,36 @@
+.contact-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .contact-item {
+    width: 48%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    text-align: center; /* Căn giữa nội dung trong mỗi ô */
+  }
+  
+  .contact-image {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 50%;
+    margin: 0 auto; /* Căn giữa hình ảnh trong mỗi ô */
+  }
+  
+  .contact-details {
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .contact-item {
+      width: 100%;
+    }
+  }
+  
+h3{
+    font-size: 50px;
+}
+  

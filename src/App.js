@@ -4,6 +4,8 @@ import MajorManagement from "./pages/admin/MajorManagement.jsx";
 import ClassManagement from "./pages/admin/ClassManagement.jsx";
 import TopicManagement from "./pages/admin/TopicManagement.jsx";
 import TopicRegistation from "./pages/teacher/topicRegistation.jsx";
+import GuestUser from "./pages/guestuser/guestUser.jsx";
+
 import {
   createBrowserRouter,
   Navigate,
@@ -16,6 +18,10 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/authContext.js";
 import MainLayout from "./components/layout/MainLayout.jsx";
 import MainlayoutUser from "./components/layoutUser/mainlayout.jsx";
+import ContactPage from "./pages/guestuser/ContactPage.jsx";
+import ProjectListPage from "./pages/guestuser/ProjectListPage.jsx";
+import UserGuidePage from "./pages/guestuser/UserGuidePage.jsx";
+import NotificationPage from "./pages/guestuser/NotificationPage.jsx";
 
 function App() {
   const { currentAdmin } = useContext(AuthContext);
@@ -43,9 +49,34 @@ function App() {
     {
       path: "/",
       element: (
-        <Outlet />
+        <GuestUser />
       ),
+      
       children: [
+        {
+          path: "/contact",
+          element: (
+            <ContactPage/>
+          )
+        },
+        {
+          path: "/notifications",
+          element: (
+            <NotificationPage/>
+          )
+        },
+        {
+          path: "/user-guide",
+          element: (
+            <UserGuidePage/>
+          )
+        },
+        {
+          path: "/project-list",
+          element: (
+            <ProjectListPage/>
+          )
+        },
         {
           path: "admin",
           element: (
@@ -93,17 +124,22 @@ function App() {
             },
           ],
         },
-        {
-          // Path rỗng nằm ở mức cha để xử lý trường hợp mặc định
-          path: "",
-          element: currentAdmin.role === "admin" ? <Navigate to="/admin/UserAdmin" /> : <Navigate to="/teacher" />,
-        },
+        // {
+        //   // Path rỗng nằm ở mức cha để xử lý trường hợp mặc định
+        //   path: "",
+        //   element: currentAdmin.role === "admin" ? <Navigate to="/admin/UserAdmin" /> : <Navigate to="/teacher" />,
+        // },
+
       ],
     },
     {
       path: "/loginAdmin",
       element: <Login />,
     },
+    // {
+    //   path: "/guestUser",
+    //   element: <Guestuser />,
+    // },
   ];
 
   // Create router
