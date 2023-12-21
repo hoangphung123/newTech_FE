@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MainLayout from "../../components/layout/MainLayout";
 import {
   Box,
   Button,
-  Chip,
-  FormControlLabel,
   Grid,
-  Radio,
-  RadioGroup,
   TextField,
   Typography,
   Select,
@@ -21,17 +16,13 @@ import * as Usersever from "../../server/teacherstore";
 import "./topicRegistation.scss";
 
 function AccountManagement() {
-  const [name, setName] = useState("");
   const [isOpenModalSelectStudent, setIsOpenModalSelectStudent] =
     useState(false);
-  const [listClass, setListClass] = useState([]);
-  const [majorUpdate, setMajorUpdate] = useState({});
   const [majorName, setMajorName] = useState("");
   const [Majors, setMajors] = useState([]);
-  const [startYear, setStartYear] = useState("");
-  const [finishYear, setFinishYear] = useState("");
   const [isOpenConfirmDelete, setIsOpenConfirmDelete] = useState(false);
-  const [idDelete, setIdDelete] = useState("");
+  const [gmailStudent1, setGmailStudent1] = useState("");
+  const [gmailStudent2, setGmailStudent2] = useState("");
 
   const [dataTopic, setDataTopic] = useState([]);
   const [idUpdate, setIdUpdate] = useState("");
@@ -45,6 +36,7 @@ function AccountManagement() {
       headerName: "Tên",
       width: 150,
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "detail",
@@ -99,21 +91,61 @@ function AccountManagement() {
       width: 200,
       headerAlign: "center",
       renderCell: (params) => {
+        const status = params.row.status;
+        const currentRegistation = params.row.isYourRegistration;
+
         return (
           <Box display={"flex"} gap={2} alignItems={"center"}>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => {
-                setSelectedTopicId(params.row.id);
-                setIsOpenModalSelectStudent(true);
-                setIdUpdate(params.row.id);
-                setSelectedTopicData(params.row);
-                console.log("userRole", userRole);
-              }}
-            >
-              Registration
-            </Button>
+            {status === 3 && !currentRegistation && (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  // Handle "Waiting" button click
+                }}
+              >
+                Waiting
+              </Button>
+            )}
+            {status === 3 && currentRegistation && (
+              <>
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={() => {
+                    // Handle "Waiting" button click
+                  }}
+                >
+                  Waiting
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  onClick={() => {
+                    setIsOpenConfirmDelete(true);
+                    setSelectedTopicId(params.row.topicRegistrationId);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            )}
+            {status !== 3 && (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  setSelectedTopicId(params.row.id);
+                  setIsOpenModalSelectStudent(true);
+                  setIdUpdate(params.row.id);
+                  setSelectedTopicData(params.row);
+                  console.log("userRole", userRole);
+                }}
+              >
+                Registration
+              </Button>
+            )}
           </Box>
         );
       },
@@ -158,6 +190,87 @@ function AccountManagement() {
     }
   };
 
+  const handleRegisTopic = async () => {
+    // You can customize the logic to get the necessary data
+    const accessToken = JSON.parse(
+      localStorage.getItem("access_token_teacher")
+    );
+    const topicId = selectedTopicId; // Assuming you have selectedTopicId available
+    const firstStudentEmail = gmailStudent1; // Assuming you have gmailStudent1 available
+    const secondStudentEmail = gmailStudent2; // Assuming you have gmailStudent2 available
+
+    // Build the RegisData object
+    const RegisData = {
+      message: "",
+      topicId: topicId,
+      firstStudentEmail: firstStudentEmail,
+      secondStudentEmail: secondStudentEmail,
+    };
+
+    try {
+      // Call the RegistationTopicTeacher function with the required data
+      const registrationResult = await Usersever.RegistationTopicTeacher(
+        accessToken,
+        RegisData
+      );
+
+      // Handle the result as needed
+      console.log("Registration result:", registrationResult);
+
+      fetchTopicData();
+
+      // You can also handle UI changes, notifications, or other actions here
+      // ...
+
+      // Close the modal or perform other actions if needed
+      setIsOpenModalSelectStudent(false);
+    } catch (error) {
+      console.error("Error during topic registration:", error.message);
+      // Handle errors or show notifications if needed
+    }
+  };
+
+  const handleCancelRegis = async (registrationId) => {
+    // You can customize the logic to get the necessary data
+    const accessToken = JSON.parse(
+      localStorage.getItem("access_token_teacher")
+    );
+
+    try {
+      // Call the DeleteRegisTopicTeacher function with the required data
+      const cancellationResult = await Usersever.DeleteRegisTopicTeacher(
+        accessToken,
+        registrationId
+      );
+
+      // Handle the result as needed
+      console.log("Cancellation result:", cancellationResult);
+      fetchTopicData();
+      // You can also handle UI changes, notifications, or other actions here
+      // ...
+
+      // Close the modal or perform other actions if needed
+      setIsOpenConfirmDelete(false);
+    } catch (error) {
+      console.error("Error during cancellation:", error.message);
+      // Handle errors or show notifications if needed
+    }
+  };
+
+  const fetchTopicData = async () => {
+    try {
+      // Fetch user data using getAllUsers function
+      const accessToken = JSON.parse(
+        localStorage.getItem("access_token_teacher")
+      );
+      const TopicsData = await Usersever.GetAllTopic(accessToken);
+      setDataTopic(TopicsData.listData);
+    } catch (error) {
+      console.error("Error while fetching users:", error.message);
+      // Handle error if needed
+    }
+  };
+
   useEffect(() => {
     const getMajorData = async () => {
       try {
@@ -168,19 +281,6 @@ function AccountManagement() {
         setMajors(MajorData.listData);
       } catch (error) {
         console.error("Error while fetching classes:", error.message);
-      }
-    };
-    const fetchTopicData = async () => {
-      try {
-        // Fetch user data using getAllUsers function
-        const accessToken = JSON.parse(
-          localStorage.getItem("access_token_teacher")
-        );
-        const TopicsData = await Usersever.GetAllTopic(accessToken);
-        setDataTopic(TopicsData.listData);
-      } catch (error) {
-        console.error("Error while fetching users:", error.message);
-        // Handle error if needed
       }
     };
 
@@ -215,7 +315,7 @@ function AccountManagement() {
                 required
               >
                 {Majors.map((MajorItem) => (
-                  <MenuItem key={MajorItem.id} value={MajorItem.name}>
+                  <MenuItem key={MajorItem.id} value={MajorItem.id}>
                     {MajorItem.name}
                   </MenuItem>
                 ))}
@@ -236,7 +336,7 @@ function AccountManagement() {
         <ModalSelectStudent
           open={isOpenModalSelectStudent}
           handleClose={() => setIsOpenModalSelectStudent(false)}
-          // handleOk={handleUpdateMajor}
+          handleOk={handleRegisTopic}
         >
           <Typography variant="subtitle2" my={2}>
             Gmail của sinh viên:
@@ -247,10 +347,8 @@ function AccountManagement() {
                 fullWidth
                 label="leader"
                 size="small"
-                value={majorUpdate?.name}
-                onChange={(e) =>
-                  setMajorUpdate({ ...majorUpdate, name: e.target.value })
-                }
+                value={gmailStudent1}
+                onChange={(e) => setGmailStudent1(e.target.value)}
               />
             </div>
             <div className="students">
@@ -258,26 +356,18 @@ function AccountManagement() {
                 fullWidth
                 label="member"
                 size="small"
-                value={majorUpdate?.name}
-                onChange={(e) =>
-                  setMajorUpdate({ ...majorUpdate, name: e.target.value })
-                }
-              />
-            </div>
-            <div className="students">
-              <TextField
-                fullWidth
-                label="member"
-                size="small"
-                value={majorUpdate?.name}
-                onChange={(e) =>
-                  setMajorUpdate({ ...majorUpdate, name: e.target.value })
-                }
+                value={gmailStudent2}
+                onChange={(e) => setGmailStudent2(e.target.value)}
               />
             </div>
           </div>
         </ModalSelectStudent>
       </Box>
+      <ConfirmDelete
+        open={isOpenConfirmDelete}
+        handleOk={() => handleCancelRegis(selectedTopicId)}
+        handleClose={() => setIsOpenConfirmDelete(false)}
+      />
       {/* </Box> */}
     </div>
 

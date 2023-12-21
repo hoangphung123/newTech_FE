@@ -144,6 +144,7 @@ function CreateAccount({ setList }) {
             >
               <MenuItem value={"STUDENT"}>Sinh Viên</MenuItem>
               <MenuItem value={"TEACHER"}>Giảng Viên</MenuItem>
+              <MenuItem value={"MAJOR_HEAD"}>Trưởng Bộ môn</MenuItem>
             </Select>
           </Grid>
           {role === "STUDENT" && (

@@ -1,4 +1,5 @@
 import Login from "./pages/login/Login.jsx";
+import LoginUser from "./pages/loginUser/Login.jsx";
 import AccountManagement from "./pages/admin/AccountManagement";
 import MajorManagement from "./pages/admin/MajorManagement.jsx";
 import ClassManagement from "./pages/admin/ClassManagement.jsx";
@@ -6,6 +7,7 @@ import TopicManagement from "./pages/admin/TopicManagement.jsx";
 import TopicRegistation from "./pages/teacher/topicRegistation.jsx";
 import GuestUser from "./pages/guestuser/guestUser.jsx";
 
+import TopicManagementTeacher from "./pages/teacher/managementTopic.jsx";
 import {
   createBrowserRouter,
   Navigate,
@@ -122,6 +124,10 @@ function App() {
               path: "TopicRegistation",
               element: <TopicRegistation />,
             },
+            {
+              path: "TopicManagement",
+              element: <TopicManagementTeacher />,
+            },
           ],
         },
         // {
@@ -140,6 +146,10 @@ function App() {
     //   path: "/guestUser",
     //   element: <Guestuser />,
     // },
+    {
+      path: "/login",
+      element: <LoginUser />,
+    },
   ];
 
   // Create router

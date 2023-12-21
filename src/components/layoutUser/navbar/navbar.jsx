@@ -1,5 +1,5 @@
 // Navbar.js
-import React from "react";
+import { useState, useContext } from "react";
 // import './navbar.css'
 import PersonIcon from "@mui/icons-material/Person";
 import TopicIcon from "@mui/icons-material/Topic";
@@ -14,8 +14,10 @@ import {
   MenuItem,
   IconButton,
 } from "@mui/material";
+import { AuthContext } from "../../../context/authContext";
 
 function Navbar() {
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="side-bar">
       <div id="close-btn">
@@ -40,34 +42,67 @@ function Navbar() {
       </div>
 
       <nav class="navbar">
-        <a href="TopicRegistation">
-          <PersonIcon sx={{ marginRight: 1 }} style={{ color: "#8E44AD" }} />
-          <Typography className="PersonIcon" variant="inherit" style={{ color: "#8E44AD" }}>
-            Đăng Ký Đề Tài
-          </Typography>
-        </a>
-        <a href="about.html">
-          <PersonIcon sx={{ marginRight: 1 }} style={{ color: "#8E44AD" }} />
-          <Typography
-            className="PersonIcon"
-            variant="inherit"
-            style={{ color: "#8E44AD" }}
-          >
-            Quản Lý Đề Tài
-          </Typography>
-        </a>
-        <a href="courses.html">
-          <PersonIcon sx={{ marginRight: 1 }} style={{ color: "#8E44AD" }} />
-          <Typography className="PersonIcon" variant="inherit" style={{ color: "#8E44AD" }}>
-            Duyệt Đề Tài (TBM)
-          </Typography>
-        </a>
-        <a href="teachers.html">
-          <PersonIcon sx={{ marginRight: 1 }} style={{ color: "#8E44AD" }} />
-          <Typography className="PersonIcon" variant="inherit" style={{ color: "#8E44AD" }}>
-            Phân Giáo Viên PB
-          </Typography>
-        </a>
+        {currentUser?.role?.name === "TEACHER" && (
+          <>
+            <a href="TopicRegistation">
+              <PersonIcon
+                sx={{ marginRight: 1 }}
+                style={{ color: "#8E44AD" }}
+              />
+              <Typography
+                className="PersonIcon"
+                variant="inherit"
+                style={{ color: "#8E44AD" }}
+              >
+                Đăng Ký Đề Tài
+              </Typography>
+            </a>
+            <a href="TopicManagement">
+              <PersonIcon
+                sx={{ marginRight: 1 }}
+                style={{ color: "#8E44AD" }}
+              />
+              <Typography
+                className="PersonIcon"
+                variant="inherit"
+                style={{ color: "#8E44AD" }}
+              >
+                Quản Lý Đề Tài
+              </Typography>
+            </a>
+          </>
+        )}
+
+        {currentUser?.role?.name === "MAJOR_HEAD" && (
+          <>
+            <a href="courses.html">
+              <PersonIcon
+                sx={{ marginRight: 1 }}
+                style={{ color: "#8E44AD" }}
+              />
+              <Typography
+                className="PersonIcon"
+                variant="inherit"
+                style={{ color: "#8E44AD" }}
+              >
+                Duyệt Đề Tài (TBM)
+              </Typography>
+            </a>
+            <a href="teachers.html">
+              <PersonIcon
+                sx={{ marginRight: 1 }}
+                style={{ color: "#8E44AD" }}
+              />
+              <Typography
+                className="PersonIcon"
+                variant="inherit"
+                style={{ color: "#8E44AD" }}
+              >
+                Phân Giáo Viên PB
+              </Typography>
+            </a>
+          </>
+        )}
       </nav>
     </div>
   );

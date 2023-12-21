@@ -1,0 +1,51 @@
+.managementTopic {
+    left: 12rem;
+    position: relative;
+    width: 87%;
+    display: flex;
+    gap: 10px;
+}
+
+.Left{
+    width: 40%;
+    // border: 2px solid rgba(0,0,0,.2);
+    height: 80vh;
+}
+
+.selected_Topic{
+    width: 88%;
+    padding: 5%;
+    border: 2px solid rgba(0,0,0,.2);
+    position: relative;
+    left: 0.70%;
+    // top: 2%;
+}
+
+.contents{
+    width: 88%;
+    padding: 5%;
+    border: 2px solid rgba(0,0,0,.2);
+    position: relative;
+    left: 0.70%;
+    top: 2%; 
+    height: 59vh;
+}
+
+.button_create {
+    width: 95%;
+    height: 5vh;
+    padding-left: 5%;
+    /* border: 1px solid; */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.customFormControl{
+    width: 100%;
+}
+
+.right{
+    width: 60%;
+    border: 2px solid rgba(0,0,0,.2);
+}

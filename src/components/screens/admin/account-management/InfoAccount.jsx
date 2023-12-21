@@ -87,7 +87,7 @@ function InfoAccount({ data, setList }) {
     {
       field: "role.name",
       headerName: "Vai trò",
-      width: 120,
+      width: 140,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
