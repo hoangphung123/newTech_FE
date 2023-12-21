@@ -121,5 +121,60 @@ export const getTopicByKeyword = async (accessToken, keyword) => {
   }
 }
 
+export const RegistationTopicTeacher = async (accessToken, RegisData) => {
+  try {
+    const response = await axios.post(
+      `${api_url}/topic-registration/teacher`,
+      RegisData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const registrationResult = response.data;
+    return registrationResult;
+  } catch (error) {
+    console.error("Error while registering topic for teacher:", error.message);
+    throw error;
+  }
+}
+
+export const DeleteRegisTopicTeacher = async (accessToken, registrationId) => {
+  try {
+    const response = await axios.delete(
+      `${api_url}/topic-registration/cancellation/${registrationId}/teacher`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const cancellationResult = response.data;
+    return cancellationResult;
+  } catch (error) {
+    console.error("Error while canceling topic registration:", error.message);
+    throw error;
+  }
+}
+
+export const GetTopicOnGoing = async (accessToken, teacherId) => {
+  try {
+    const response = await axios.get(
+      `${api_url}/topic/on-going?teacherId=${teacherId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const topicOnGoingData = response.data;
+    return topicOnGoingData;
+  } catch (error) {
+    console.error("Error while fetching ongoing topics:", error.message);
+    throw error;
+  }
+}
+
 
 

@@ -24,6 +24,9 @@ export const getColor = (value) => {
     case "TEACHER":
       color = "success";
       break;
+    case "MAJOR_HEAD":
+      color = "error";
+      break;
     default:
       color = "";
       break;

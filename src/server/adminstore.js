@@ -11,7 +11,18 @@ export const loginAdmin = async (loginData) => {
     console.error("Error while logging in:", error.message);
     throw error;
   }
-};
+}
+
+export const loginUser = async (loginData) => {
+  try {
+    const response = await axios.post(`${api_url}/auth/login`, loginData);
+    const loggedInUser = response.data;
+    return loggedInUser;
+  } catch (error) {
+    console.error("Error while logging in:", error.message);
+    throw error;
+  }
+}
 
 export const GetAllClasses = async (accessToken) => {
   try {
