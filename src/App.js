@@ -51,34 +51,10 @@ function App() {
     {
       path: "/",
       element: (
-        <GuestUser />
+        <Outlet />
       ),
-      
+
       children: [
-        {
-          path: "/contact",
-          element: (
-            <ContactPage/>
-          )
-        },
-        {
-          path: "/notifications",
-          element: (
-            <NotificationPage/>
-          )
-        },
-        {
-          path: "/user-guide",
-          element: (
-            <UserGuidePage/>
-          )
-        },
-        {
-          path: "/project-list",
-          element: (
-            <ProjectListPage/>
-          )
-        },
         {
           path: "admin",
           element: (
@@ -117,7 +93,7 @@ function App() {
           element: (
             <MainlayoutUser>
               <Outlet />
-            </MainlayoutUser>  
+            </MainlayoutUser>
           ),
           children: [
             {
@@ -127,6 +103,30 @@ function App() {
             {
               path: "TopicManagement",
               element: <TopicManagementTeacher />,
+            },
+          ],
+        },
+        {
+          path: "",
+          element: (
+            <GuestUser />
+          ),
+          children: [
+            {
+              path: "contact",
+              element: <ContactPage />
+            },
+            {
+              path: "notifications",
+              element: <NotificationPage />
+            },
+            {
+              path: "user-guide",
+              element: <UserGuidePage />
+            },
+            {
+              path: "project-list",
+              element: <ProjectListPage />
             },
           ],
         },

@@ -35,3 +35,14 @@
 .right-section button:hover {
   background-color: #45a049;
 }
+.background-container {
+  position :flex;
+  width: 100%;
+  z-index: -1; /* Send it to the back */
+}
+
+img.background-image {
+  width: 100%;
+  height: auto; /* Maintain the aspect ratio of the image */
+  display: block;
+}
