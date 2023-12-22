@@ -1,9 +1,18 @@
 // Header.js
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // import './header.css'
 
 function Header() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Remove user data from localStorage
+    localStorage.removeItem("user");
+
+    // Navigate to the login page
+    navigate("/login")
+  };
   return (
     <header className="header">
       <section class="flex">
@@ -29,7 +38,7 @@ function Header() {
           <div id="menu-btn" class="fas fa-bars"></div>
           <div id="search-btn" class="fas fa-search"></div>
           <div id="user-btn" class="fas fa-user"></div>
-          <div id="toggle-btn" class="fas fa-sun"></div>
+          <div id="toggle-btn" class="fas fa-sun" onClick={handleLogout}></div>
         </div>
 
         <div class="profile">

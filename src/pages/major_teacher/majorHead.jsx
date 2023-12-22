@@ -11,7 +11,7 @@ import {
 import ConfirmDelete from "../../components/common/ConfirmDelete";
 import { notify } from "../../untils/helpers/notify";
 import { DataGrid } from "@mui/x-data-grid";
-import ModalSelectStudent from "../../components/common/ModalSelectStudent";
+import ModalSelectStudent from "../../components/common/ModalSelectGV";
 import * as Usersever from "../../server/teacherstore";
 import "./topicRegistation.scss";
 
@@ -21,8 +21,7 @@ function AccountManagement() {
   const [majorName, setMajorName] = useState("");
   const [Majors, setMajors] = useState([]);
   const [isOpenConfirmDelete, setIsOpenConfirmDelete] = useState(false);
-  const [gmailStudent1, setGmailStudent1] = useState("");
-  const [gmailStudent2, setGmailStudent2] = useState("");
+  const [gmailTeacher, setGmailTeacher] = useState("");
 
   const [dataTopic, setDataTopic] = useState([]);
   const [idUpdate, setIdUpdate] = useState("");
@@ -66,16 +65,6 @@ function AccountManagement() {
       },
     },
     {
-      field: "admin.username",
-      headerName: "Admin",
-      width: 100,
-      headerAlign: "center",
-      align: "center",
-      valueGetter: (params) => {
-        return params.row.admin?.username || "";
-      },
-    },
-    {
       field: "major.name",
       headerName: "Ngành",
       width: 150,
@@ -88,35 +77,40 @@ function AccountManagement() {
     {
       field: "action",
       headerName: "Hành động",
-      width: 200,
+      width: 220,
       headerAlign: "center",
       renderCell: (params) => {
         const status = params.row.status;
-        const currentRegistation = params.row.isYourRegistration;
+        // const currentRegistation = params.row.isYourRegistration;
 
         return (
           <Box display={"flex"} gap={2} alignItems={"center"}>
-            {status === 3 && !currentRegistation && (
+            {status === 2 && (
               <Button
                 variant="contained"
                 size="small"
+                color="success"
                 onClick={() => {
                   // Handle "Waiting" button click
                 }}
               >
-                Waiting
+                Đã phê duyệt
               </Button>
             )}
-            {status === 3 && currentRegistation && (
+            {status === 3 && (
               <>
                 <Button
                   variant="contained"
                   size="small"
                   onClick={() => {
-                    // Handle "Waiting" button click
+                    setSelectedTopicId(params.row.topicRegistrationId);
+                    setIsOpenModalSelectStudent(true);
+                    setIdUpdate(params.row.id);
+                    setSelectedTopicData(params.row);
+                    console.log("userRole", userRole);
                   }}
                 >
-                  Waiting
+                  Chấp nhận
                 </Button>
                 <Button
                   variant="outlined"
@@ -127,24 +121,9 @@ function AccountManagement() {
                     setSelectedTopicId(params.row.topicRegistrationId);
                   }}
                 >
-                  Cancel
+                  Từ chối
                 </Button>
               </>
-            )}
-            {status !== 3 && (
-              <Button
-                variant="contained"
-                size="small"
-                onClick={() => {
-                  setSelectedTopicId(params.row.id);
-                  setIsOpenModalSelectStudent(true);
-                  setIdUpdate(params.row.id);
-                  setSelectedTopicData(params.row);
-                  console.log("userRole", userRole);
-                }}
-              >
-                Registration
-              </Button>
             )}
           </Box>
         );
@@ -173,11 +152,11 @@ function AccountManagement() {
 
     try {
       const accessToken = JSON.parse(
-        localStorage.getItem("access_token_teacher")
+        localStorage.getItem("access_token_user")
       );
 
       // Call the getTopicByMajorId function
-      const topicsByMajor = await Usersever.getTopicByKeyword(
+      const topicsByMajor = await Usersever.getTopicByMajorHead(
         accessToken,
         majorNames
       );
@@ -193,24 +172,21 @@ function AccountManagement() {
   const handleRegisTopic = async () => {
     // You can customize the logic to get the necessary data
     const accessToken = JSON.parse(
-      localStorage.getItem("access_token_teacher")
+      localStorage.getItem("access_token_user")
     );
-    const topicId = selectedTopicId; // Assuming you have selectedTopicId available
-    const firstStudentEmail = gmailStudent1; // Assuming you have gmailStudent1 available
-    const secondStudentEmail = gmailStudent2; // Assuming you have gmailStudent2 available
-
+    const firstStudentEmail = gmailTeacher; // Assuming you have gmailStudent1 available
+    const registrationId = selectedTopicId;
     // Build the RegisData object
     const RegisData = {
-      message: "",
-      topicId: topicId,
-      firstStudentEmail: firstStudentEmail,
-      secondStudentEmail: secondStudentEmail,
+      status: "3",
+      reviewTeacher: firstStudentEmail,
     };
 
     try {
       // Call the RegistationTopicTeacher function with the required data
-      const registrationResult = await Usersever.RegistationTopicTeacher(
+      const registrationResult = await Usersever.EvaluateTopic(
         accessToken,
+        registrationId,
         RegisData
       );
 
@@ -231,16 +207,20 @@ function AccountManagement() {
   };
 
   const handleCancelRegis = async (registrationId) => {
+    const RegisData = {
+      status: 2,
+    };
     // You can customize the logic to get the necessary data
     const accessToken = JSON.parse(
-      localStorage.getItem("access_token_teacher")
+      localStorage.getItem("access_token_user")
     );
 
     try {
       // Call the DeleteRegisTopicTeacher function with the required data
-      const cancellationResult = await Usersever.DeleteRegisTopicTeacher(
+      const cancellationResult = await Usersever.EvaluateTopic(
         accessToken,
-        registrationId
+        registrationId,
+        RegisData
       );
 
       // Handle the result as needed
@@ -261,9 +241,9 @@ function AccountManagement() {
     try {
       // Fetch user data using getAllUsers function
       const accessToken = JSON.parse(
-        localStorage.getItem("access_token_teacher")
+        localStorage.getItem("access_token_user")
       );
-      const TopicsData = await Usersever.GetAllTopic(accessToken);
+      const TopicsData = await Usersever.GetAllTopicMajorHead(accessToken);
       setDataTopic(TopicsData.listData);
     } catch (error) {
       console.error("Error while fetching users:", error.message);
@@ -275,7 +255,7 @@ function AccountManagement() {
     const getMajorData = async () => {
       try {
         const accessToken = JSON.parse(
-          localStorage.getItem("access_token_teacher")
+          localStorage.getItem("access_token_user")
         );
         const MajorData = await Usersever.GetAllMajorDropDown(accessToken);
         setMajors(MajorData.listData);
@@ -339,25 +319,16 @@ function AccountManagement() {
           handleOk={handleRegisTopic}
         >
           <Typography variant="subtitle2" my={2}>
-            Gmail của sinh viên:
+            Gmail của giáo viên phản biện
           </Typography>
           <div className="student">
             <div className="students">
               <TextField
                 fullWidth
-                label="leader"
+                label="gmail"
                 size="small"
-                value={gmailStudent1}
-                onChange={(e) => setGmailStudent1(e.target.value)}
-              />
-            </div>
-            <div className="students">
-              <TextField
-                fullWidth
-                label="member"
-                size="small"
-                value={gmailStudent2}
-                onChange={(e) => setGmailStudent2(e.target.value)}
+                value={gmailTeacher}
+                onChange={(e) => setGmailTeacher(e.target.value)}
               />
             </div>
           </div>

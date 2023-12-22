@@ -173,7 +173,7 @@ function AccountManagement() {
 
     try {
       const accessToken = JSON.parse(
-        localStorage.getItem("access_token_teacher")
+        localStorage.getItem("access_token_user")
       );
 
       // Call the getTopicByMajorId function
@@ -193,7 +193,7 @@ function AccountManagement() {
   const handleRegisTopic = async () => {
     // You can customize the logic to get the necessary data
     const accessToken = JSON.parse(
-      localStorage.getItem("access_token_teacher")
+      localStorage.getItem("access_token_user")
     );
     const topicId = selectedTopicId; // Assuming you have selectedTopicId available
     const firstStudentEmail = gmailStudent1; // Assuming you have gmailStudent1 available
@@ -261,7 +261,7 @@ function AccountManagement() {
     try {
       // Fetch user data using getAllUsers function
       const accessToken = JSON.parse(
-        localStorage.getItem("access_token_teacher")
+        localStorage.getItem("access_token_user")
       );
       const TopicsData = await Usersever.GetAllTopic(accessToken);
       setDataTopic(TopicsData.listData);
@@ -275,7 +275,7 @@ function AccountManagement() {
     const getMajorData = async () => {
       try {
         const accessToken = JSON.parse(
-          localStorage.getItem("access_token_teacher")
+          localStorage.getItem("access_token_user")
         );
         const MajorData = await Usersever.GetAllMajorDropDown(accessToken);
         setMajors(MajorData.listData);

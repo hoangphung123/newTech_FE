@@ -75,7 +75,7 @@ function Navbar() {
 
         {currentUser?.role?.name === "MAJOR_HEAD" && (
           <>
-            <a href="courses.html">
+            <a href="AcceptTopicRegis">
               <PersonIcon
                 sx={{ marginRight: 1 }}
                 style={{ color: "#8E44AD" }}

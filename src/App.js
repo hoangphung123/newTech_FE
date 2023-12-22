@@ -5,6 +5,7 @@ import MajorManagement from "./pages/admin/MajorManagement.jsx";
 import ClassManagement from "./pages/admin/ClassManagement.jsx";
 import TopicManagement from "./pages/admin/TopicManagement.jsx";
 import TopicRegistation from "./pages/teacher/topicRegistation.jsx";
+import AcceptTopicRegis from "./pages/major_teacher/majorHead.jsx";
 import TopicManagementTeacher from "./pages/teacher/managementTopic.jsx";
 import {
   createBrowserRouter,
@@ -96,6 +97,10 @@ function App() {
             {
               path: "TopicManagement",
               element: <TopicManagementTeacher />,
+            },
+            {
+              path: "AcceptTopicRegis",
+              element: <AcceptTopicRegis />,
             },
           ],
         },

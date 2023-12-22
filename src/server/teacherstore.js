@@ -91,6 +91,21 @@ export const GetAllTopic= async (accessToken) => {
     }
 }
 
+export const GetAllTopicMajorHead= async (accessToken) => {
+  try {
+    const response = await axios.get(`${api_url}/topic/major-head`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const TopicData = response.data;
+    return TopicData;
+  } catch (error) {
+    console.error("Error while fetching majors:", error.message);
+    throw error;
+  }
+}
+
 export const getTopicByMajorId = async (accessToken, majorId) => {
   try {
     const response = await axios.get(`${api_url}/topic/${majorId}/filter`, {
@@ -109,6 +124,21 @@ export const getTopicByMajorId = async (accessToken, majorId) => {
 export const getTopicByKeyword = async (accessToken, keyword) => {
   try {
     const response = await axios.get(`${api_url}/topic/teacher?majorId=${keyword}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const topicData = response.data;
+    return topicData;
+  } catch (error) {
+    console.error("Error while fetching topics by keyword:", error.message);
+    throw error;
+  }
+}
+
+export const getTopicByMajorHead = async (accessToken, keyword) => {
+  try {
+    const response = await axios.get(`${api_url}/topic/major-head?majorId=${keyword}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -172,6 +202,25 @@ export const GetTopicOnGoing = async (accessToken, teacherId) => {
     return topicOnGoingData;
   } catch (error) {
     console.error("Error while fetching ongoing topics:", error.message);
+    throw error;
+  }
+}
+
+export const EvaluateTopic = async (accessToken, registrationId, evaluationData) => {
+  try {
+    const response = await axios.patch(
+      `${api_url}/topic-registration/${registrationId}/teacher/evaluate`,
+      evaluationData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const evaluationResult = response.data;
+    return evaluationResult;
+  } catch (error) {
+    console.error("Error while evaluating topic registration:", error.message);
     throw error;
   }
 }
