@@ -1,0 +1,48 @@
+/* Navbar.css */
+
+.navbar-container {
+  background-color: #ddd;
+  padding: 10px;
+}
+
+.navbars {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+}
+
+.left-section img {
+  max-height: 50px;
+}
+
+.center-section a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.right-section button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.right-section button:hover {
+  background-color: #45a049;
+}
+.background-container {
+  position :flex;
+  width: 100%;
+  z-index: -1; /* Send it to the back */
+}
+
+img.background-image {
+  width: 100%;
+  height: auto; /* Maintain the aspect ratio of the image */
+  display: block;
+}

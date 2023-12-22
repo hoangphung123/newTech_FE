@@ -43,7 +43,7 @@ function Main() {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleMenuClose} component={Link} to="/admin/UserAdmin">
+          <MenuItem onClick={handleMenuClose} component={Link} to="/">
             <PersonIcon sx={{ marginRight: 1 }} />
             <Typography variant="inherit">Quản lý tài khoản</Typography>
           </MenuItem>
