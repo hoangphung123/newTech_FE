@@ -17,7 +17,7 @@ const Login = () => {
       e.preventDefault();
       await login({ username, password });
       // localStorage.setItem("user", "admin");
-      navigate("/");
+      navigate("/admin/UserAdmin");
       // window.location.reload();
     } catch (error) {
       notify("error", error?.response?.data?.message);

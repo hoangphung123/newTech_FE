@@ -32,7 +32,7 @@ const GuestUser = () => {
   };
   return (
     <div className="navbar-container">
-      <AppBar position="static" className="navbar">
+      <AppBar position="static" className="navbars">
         <Toolbar>
           <div className="left-section">
             <img
