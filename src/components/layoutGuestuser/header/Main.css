@@ -1,0 +1,59 @@
+.css-o123jv-MuiList-root {
+    background-color: #1E5941 !important;
+    display: flex;
+}
+
+.css-cveggr-MuiListItemIcon-root {
+    color: #f7fcff !important;
+}
+
+@media (min-width: 1200px) {
+    .css-1oqqzyl-MuiContainer-root {
+      max-width: 100% !important;
+    }
+}
+
+.css-o123jv-MuiList-root {
+    width: 30%;
+}
+
+.css-10hburv-MuiTypography-root {
+    color: white;
+}
+
+.css-1gkg3nt {
+    background-color: #1E5941 !important;
+}
+
+.css-p1ezcw {
+    background-color: #1E5941 !important;
+}
+
+.css-189e9pj-MuiButtonBase-root-MuiButton-root {
+    background-color: #1E5941 !important;
+    
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+    background-color: #1E5941 !important;
+}
+
+.css-1pq723i-MuiGrid-root {
+    margin-left: 31px !important;
+    
+}
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+    display: flex !important;
+    align-items: center !important; 
+    justify-content: center;
+}
+
+.css-mhc70k-MuiGrid-root {
+    flex-direction: column !important;
+    
+}
+
+.css-mhc70k-MuiGrid-root>.MuiGrid-item {
+    min-width: 100%;
+}
