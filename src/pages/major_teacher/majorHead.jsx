@@ -178,8 +178,8 @@ function AccountManagement() {
     const registrationId = selectedTopicId;
     // Build the RegisData object
     const RegisData = {
-      status: "3",
-      reviewTeacher: firstStudentEmail,
+      status: 3,
+      reviewTeacherMail: firstStudentEmail,
     };
 
     try {

@@ -18,13 +18,15 @@ const Login = () => {
       e.preventDefault();
       const response = await loginCurrentUser({ username, password });
       const decoded = jwtDecode(response.data.token);
-      setCurrentUser(decoded);
+      
       // console.log('decode', decoded)
       if (decoded.role.name === "TEACHER") {
         navigate("/teacher/topicRegistation")
       }else if (decoded.role.name === "MAJOR_HEAD") {
         navigate("/teacher/AcceptTopicRegis")
       }
+
+      setCurrentUser(decoded);
       console.log(currentUser);
       // localStorage.setItem("user", "admin");
       // navigate("/");

@@ -29,21 +29,19 @@ const api_url = "http://127.0.0.1:3500/api/v1";
 // }
 
 export const GetAllMajorDropDown = async (accessToken) => {
-    try {
-      const response = await axios.get(`${api_url}/major/dropdown/filter`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const majors = response.data;
-      return majors;
-    } catch (error) {
-      console.error("Error while fetching majors:", error.message);
-      throw error;
-    }
-}
-
-
+  try {
+    const response = await axios.get(`${api_url}/major/dropdown/filter`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const majors = response.data;
+    return majors;
+  } catch (error) {
+    console.error("Error while fetching majors:", error.message);
+    throw error;
+  }
+};
 
 // export const GetAllClass = async (accessToken) => {
 //   try {
@@ -60,8 +58,7 @@ export const GetAllMajorDropDown = async (accessToken) => {
 //   }
 // }
 
-
-export const GetAllTopicByMajorId= async (accessToken) => {
+export const GetAllTopicByMajorId = async (accessToken) => {
   try {
     const response = await axios.get(`${api_url}/topic/filter`, {
       headers: {
@@ -74,24 +71,24 @@ export const GetAllTopicByMajorId= async (accessToken) => {
     console.error("Error while fetching majors:", error.message);
     throw error;
   }
-}
+};
 
-export const GetAllTopic= async (accessToken) => {
-    try {
-      const response = await axios.get(`${api_url}/topic/teacher`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const TopicData = response.data;
-      return TopicData;
-    } catch (error) {
-      console.error("Error while fetching majors:", error.message);
-      throw error;
-    }
-}
+export const GetAllTopic = async (accessToken) => {
+  try {
+    const response = await axios.get(`${api_url}/topic/teacher`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const TopicData = response.data;
+    return TopicData;
+  } catch (error) {
+    console.error("Error while fetching majors:", error.message);
+    throw error;
+  }
+};
 
-export const GetAllTopicMajorHead= async (accessToken) => {
+export const GetAllTopicMajorHead = async (accessToken) => {
   try {
     const response = await axios.get(`${api_url}/topic/major-head`, {
       headers: {
@@ -104,7 +101,7 @@ export const GetAllTopicMajorHead= async (accessToken) => {
     console.error("Error while fetching majors:", error.message);
     throw error;
   }
-}
+};
 
 export const getTopicByMajorId = async (accessToken, majorId) => {
   try {
@@ -119,37 +116,43 @@ export const getTopicByMajorId = async (accessToken, majorId) => {
     console.error("Error while fetching topics by majorId:", error.message);
     throw error;
   }
-}
+};
 
 export const getTopicByKeyword = async (accessToken, keyword) => {
   try {
-    const response = await axios.get(`${api_url}/topic/teacher?majorId=${keyword}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.get(
+      `${api_url}/topic/teacher?majorId=${keyword}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     const topicData = response.data;
     return topicData;
   } catch (error) {
     console.error("Error while fetching topics by keyword:", error.message);
     throw error;
   }
-}
+};
 
 export const getTopicByMajorHead = async (accessToken, keyword) => {
   try {
-    const response = await axios.get(`${api_url}/topic/major-head?majorId=${keyword}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.get(
+      `${api_url}/topic/major-head?majorId=${keyword}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     const topicData = response.data;
     return topicData;
   } catch (error) {
     console.error("Error while fetching topics by keyword:", error.message);
     throw error;
   }
-}
+};
 
 export const RegistationTopicTeacher = async (accessToken, RegisData) => {
   try {
@@ -168,7 +171,7 @@ export const RegistationTopicTeacher = async (accessToken, RegisData) => {
     console.error("Error while registering topic for teacher:", error.message);
     throw error;
   }
-}
+};
 
 export const DeleteRegisTopicTeacher = async (accessToken, registrationId) => {
   try {
@@ -186,7 +189,7 @@ export const DeleteRegisTopicTeacher = async (accessToken, registrationId) => {
     console.error("Error while canceling topic registration:", error.message);
     throw error;
   }
-}
+};
 
 export const GetTopicOnGoing = async (accessToken, teacherId) => {
   try {
@@ -204,9 +207,13 @@ export const GetTopicOnGoing = async (accessToken, teacherId) => {
     console.error("Error while fetching ongoing topics:", error.message);
     throw error;
   }
-}
+};
 
-export const EvaluateTopic = async (accessToken, registrationId, evaluationData) => {
+export const EvaluateTopic = async (
+  accessToken,
+  registrationId,
+  evaluationData
+) => {
   try {
     const response = await axios.patch(
       `${api_url}/topic-registration/${registrationId}/teacher/evaluate`,
@@ -223,7 +230,58 @@ export const EvaluateTopic = async (accessToken, registrationId, evaluationData)
     console.error("Error while evaluating topic registration:", error.message);
     throw error;
   }
+};
+
+export const GetProject = async (accessToken, topicId) => {
+  try {
+    const response = await axios.get(
+      `${api_url}/student-project/filter?topicId=${topicId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const projectData = response.data;
+    return projectData;
+  } catch (error) {
+    console.error("Error while fetching projects:", error.message);
+    throw error;
+  }
+};
+
+export const CreateAssignment = async (accessToken, assignmentData) => {
+  try {
+    const response = await axios.post(`${api_url}/assignment`, // Replace with the actual endpoint for creating assignments
+      assignmentData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const assignmentResult = response.data;
+    return assignmentResult;
+  } catch (error) {
+    console.error("Error while creating assignment:", error.message);
+    throw error;
+  }
 }
 
-
-
+export const GetAssignmentByTopicId = async (accessToken, topicId) => {
+  try {
+    const response = await axios.get(
+      `${api_url}/assignment/filter?topicId=${topicId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const assignmentData = response.data;
+    return assignmentData;
+  } catch (error) {
+    console.error("Error while fetching assignments by topicId:", error.message);
+    throw error;
+  }
+}
