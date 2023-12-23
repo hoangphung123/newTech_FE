@@ -24,26 +24,47 @@
 .contentAssigement_score {
     width: 20%;
     border: 1px solid rgba(0,0,0,0.2);
-    height: 13vh;
+    height: 11vh;
+    background-color: #EEEEEE;
 }
 
 .contentAssigement_Asigement {
     width: 30%;
     border: 1px solid rgba(0,0,0,0.2);
-    height: 13vh;
+    height: 11vh;
+    background-color: #EEEEEE;
 }
 
 .contentAssigement_contents {
     width: 40%;
     border: 1px solid rgba(0,0,0,0.2);
-    height: 13vh;
+    height: 11vh;
     border-radius: 5px 0px 0px 5px;
+    background-color: rgba(238, 238, 238);
+    display: flex;
+    // flex-direction: column;
+    justify-content: center;
+}
+
+.iconContents{
+    width: 10%;
+    // margin-top: 5px;
+}
+
+
+.contentsAsigement{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    font-weight: 600;
+    gap: 6px;
 }
 
 .contentAssigement_button {
     width: 10%;
     // border: 1px solid rgba(0,0,0,0.2);
-    height: 13vh;
+    height: 11vh;
     display: flex;
     flex-direction: column;
     // gap: 10px;

@@ -285,3 +285,42 @@ export const GetAssignmentByTopicId = async (accessToken, topicId) => {
     throw error;
   }
 }
+
+export const DeleteAsigement = async (accessToken, assignmentId) => {
+  try {
+    const response = await axios.delete(
+      `${api_url}/assignment/${assignmentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const deletionResult = response.data;
+    return deletionResult;
+  } catch (error) {
+    console.error("Error while deleting assignment:", error.message);
+    throw error;
+  }
+}
+
+export const UpdateAsigement = async (accessToken, assignmentId, updateData) => {
+  try {
+    const response = await axios.patch(
+      `${api_url}/assignment/${assignmentId}`,
+      updateData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const updateResult = response.data;
+    return updateResult;
+  } catch (error) {
+    console.error("Error while updating assignment:", error.message);
+    throw error;
+  }
+}
+
+
