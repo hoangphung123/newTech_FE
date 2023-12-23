@@ -32,6 +32,8 @@ function TopicManagement() {
   const [status, setStatus] = useState(1);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [score, setScore] = useState(0);
+  const [scores, setScores] = useState({});
 
   const handleUpdateDialogOpen = (assignment) => {
     setSelectedAssignment(assignment);
@@ -99,6 +101,14 @@ function TopicManagement() {
         selectedArea
       );
 
+      const scoresFromServer = {};
+      for (const assignment of assignments.listData) {
+        if (assignment.score !== null && assignment.score !== undefined) {
+          scoresFromServer[assignment.id] = assignment.score;
+        }
+      }
+      setScores(scoresFromServer);
+
       // Update the state with the fetched assignment data
       setAsigementData(assignments.listData);
     } catch (error) {
@@ -131,6 +141,14 @@ function TopicManagement() {
         accessTokens,
         selectedTopicId
       );
+
+      const scoresFromServer = {};
+      for (const assignment of assignments.listData) {
+        if (assignment.score !== null && assignment.score !== undefined) {
+          scoresFromServer[assignment.id] = assignment.score;
+        }
+      }
+      setScores(scoresFromServer);
 
       // Update the state with the fetched assignment data
       setAsigementData(assignments.listData);
@@ -237,6 +255,29 @@ function TopicManagement() {
     setUpdateDialogOpen(false);
   };
 
+  const handleChangeScore = async (event, assignmentId) => {
+    const newScore = event.target.value;
+    setScore(newScore);
+
+    try {
+      const accessToken = JSON.parse(localStorage.getItem("access_token_user"));
+
+      // Gọi hàm UpdateAssignment để cập nhật điểm
+      const result = await Userserver.UpdateAsigement(
+        accessToken,
+        assignmentId,
+        { score: newScore }
+      );
+
+      fetchAsigementData()
+
+      // Xử lý kết quả nếu cần
+      console.log("Score updated successfully:", result);
+    } catch (error) {
+      console.error("Error updating score:", error.message);
+    }
+  };
+
   return (
     <div className="managementTopic">
       <div className="Left">
@@ -295,6 +336,29 @@ function TopicManagement() {
               <div className="contentAssigement_score">
                 <div className="iconContents">
                   <DoneIcon color="success"></DoneIcon>
+                </div>
+                <div className="ScoreAsigement">
+                  <InputLabel>Select Score:</InputLabel>
+                  <Select
+                    value={
+                      scores[assignment.id] !== undefined
+                        ? scores[assignment.id]
+                        : 1
+                    }
+                    onChange={(event) =>
+                      handleChangeScore(event, assignment.id)
+                    }
+                    disabled={scores[assignment.id] !== undefined}
+                  >
+                    {/* Tạo các MenuItem cho điểm từ 1 đến 10 */}
+                    {Array.from({ length: 10 }, (_, index) => index + 1).map(
+                      (value) => (
+                        <MenuItem key={value} value={value}>
+                          {value}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
                 </div>
               </div>
               <div className="contentAssigement_button">
@@ -415,7 +479,9 @@ function TopicManagement() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleUpdateDialogClose}>Cancel</Button>
-          <Button onClick={handleUpdateTask} color="primary">Update</Button>
+          <Button onClick={handleUpdateTask} color="primary">
+            Update
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

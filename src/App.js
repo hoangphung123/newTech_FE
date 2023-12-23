@@ -5,6 +5,7 @@ import MajorManagement from "./pages/admin/MajorManagement.jsx";
 import ClassManagement from "./pages/admin/ClassManagement.jsx";
 import TopicManagement from "./pages/admin/TopicManagement.jsx";
 import TopicRegistation from "./pages/teacher/topicRegistation.jsx";
+import TopicRegistationStudent from "./pages/student/Registation.jsx";
 import AcceptTopicRegis from "./pages/major_teacher/majorHead.jsx";
 import GuestUser from "./pages/guestuser/guestUser.jsx";
 
@@ -21,6 +22,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/authContext.js";
 import MainLayout from "./components/layout/MainLayout.jsx";
 import MainlayoutUser from "./components/layoutUser/mainlayout.jsx";
+import MainlayoutStudent from "./components/layoutStudent/layoutUser/mainlayout.jsx";
 import ContactPage from "./pages/guestuser/ContactPage.jsx";
 import ProjectListPage from "./pages/guestuser/ProjectListPage.jsx";
 import UserGuidePage from "./pages/guestuser/UserGuidePage.jsx";
@@ -108,6 +110,20 @@ function App() {
             {
               path: "AcceptTopicRegis",
               element: <AcceptTopicRegis />,
+            },
+          ],
+        },
+        {
+          path: "student",
+          element: (
+            <MainlayoutStudent>
+              <Outlet />
+            </MainlayoutStudent>
+          ),
+          children: [
+            {
+              path: "TopicRegistationStudent",
+              element: <TopicRegistationStudent />,
             },
           ],
         },

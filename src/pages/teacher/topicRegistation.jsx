@@ -233,7 +233,7 @@ function AccountManagement() {
   const handleCancelRegis = async (registrationId) => {
     // You can customize the logic to get the necessary data
     const accessToken = JSON.parse(
-      localStorage.getItem("access_token_teacher")
+      localStorage.getItem("access_token_user")
     );
 
     try {

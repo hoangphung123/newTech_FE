@@ -88,6 +88,21 @@ export const GetAllTopic = async (accessToken) => {
   }
 };
 
+export const GetAllTopicStudent = async (accessToken) => {
+  try {
+    const response = await axios.get(`${api_url}/topic/student`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const TopicData = response.data;
+    return TopicData;
+  } catch (error) {
+    console.error("Error while fetching majors:", error.message);
+    throw error;
+  }
+};
+
 export const GetAllTopicMajorHead = async (accessToken) => {
   try {
     const response = await axios.get(`${api_url}/topic/major-head`, {

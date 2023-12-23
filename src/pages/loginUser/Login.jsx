@@ -24,6 +24,8 @@ const Login = () => {
         navigate("/teacher/topicRegistation")
       }else if (decoded.role.name === "MAJOR_HEAD") {
         navigate("/teacher/AcceptTopicRegis")
+      }else if (decoded.role.name ==="STUDENT") {
+        navigate("/student/TopicRegistationStudent")
       }
 
       setCurrentUser(decoded);

@@ -1,0 +1,28 @@
+/* styles.css */
+
+.navbar {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+   background-color: #333;
+   color: #fff;
+ }
+ 
+ .left-section img {
+   max-height: 50px;
+ }
+ 
+ .center-section a {
+   margin: 0 15px;
+   text-decoration: none;
+   color: #fff;
+ }
+ 
+ .right-section button {
+   background-color: #4CAF50;
+   color: #fff;
+   border: none;
+   padding: 10px 15px;
+   cursor: pointer;
+ } 
