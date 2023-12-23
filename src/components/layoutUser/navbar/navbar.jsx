@@ -1,5 +1,5 @@
 // Navbar.js
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 // import './navbar.css'
 import PersonIcon from "@mui/icons-material/Person";
 import TopicIcon from "@mui/icons-material/Topic";
@@ -15,9 +15,26 @@ import {
   IconButton,
 } from "@mui/material";
 import { AuthContext } from "../../../context/authContext";
+import * as Userserver from "../../../server/teacherstore"
 
 function Navbar() {
   const { currentUser } = useContext(AuthContext);
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    // Fetch user profile when the component mounts
+    const fetchUserProfile = async () => {
+      try {
+        const accessToken = JSON.parse(localStorage.getItem("access_token_user"));
+        const profile = await Userserver.getProfile(accessToken);
+        setUserProfile(profile.data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error.message);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
   return (
     <div className="side-bar">
       <div id="close-btn">
@@ -33,8 +50,8 @@ function Navbar() {
             class="image"
             alt=""
           />
-          <h3 class="name">Huỳnh Văn Phụng</h3>
-          <p class="role">Giáo Viên</p>
+          <h3 class="name">{userProfile?.name}</h3>
+          <p class="role">{userProfile?.role.name}</p>
           <a href="profile.html" class="btn">
             view profile
           </a>

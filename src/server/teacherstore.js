@@ -338,4 +338,19 @@ export const UpdateAsigement = async (accessToken, assignmentId, updateData) => 
   }
 }
 
+export const getProfile = async (accessToken) => {
+  try {
+    const response = await axios.get(`${api_url}/user/profile`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const userProfile = response.data;
+    return userProfile;
+  } catch (error) {
+    console.error("Error while fetching user profile:", error.message);
+    throw error;
+  }
+}
+
 

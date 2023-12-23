@@ -1,5 +1,5 @@
 // Navbar.js
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 // import './navbar.css'
 import PersonIcon from "@mui/icons-material/Person";
 import TopicIcon from "@mui/icons-material/Topic";
@@ -14,9 +14,26 @@ import {
   MenuItem,
   IconButton,
 } from "@mui/material";
+import * as Userserver from "../../../../server/teacherstore"
 
 
 function Navbar() {
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    // Fetch user profile when the component mounts
+    const fetchUserProfile = async () => {
+      try {
+        const accessToken = JSON.parse(localStorage.getItem("access_token_user"));
+        const profile = await Userserver.getProfile(accessToken);
+        setUserProfile(profile.data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error.message);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
   return (
     <div className="side-bar">
       <div id="close-btn">
@@ -32,8 +49,8 @@ function Navbar() {
             class="image"
             alt=""
           />
-          <h3 class="name">Phùng Huy Hoàng</h3>
-          <p class="role">Học sinh</p>
+          <h3 class="name">{userProfile?.name}</h3>
+          <p class="role">{userProfile?.role.name}</p>
           <a href="profile.html" class="btn">
             view profile
           </a>
@@ -41,7 +58,7 @@ function Navbar() {
       </div>
 
       <nav class="navbar">
-            <a href="TopicRegistation">
+            <a href="TopicRegistationStudent">
               <PersonIcon
                 sx={{ marginRight: 1 }}
                 style={{ color: "#8E44AD" }}
@@ -54,7 +71,7 @@ function Navbar() {
                 Đăng Ký Đề Tài
               </Typography>
             </a>
-            <a href="TopicManagement">
+            <a href="TopicManagementStudent">
               <PersonIcon
                 sx={{ marginRight: 1 }}
                 style={{ color: "#8E44AD" }}

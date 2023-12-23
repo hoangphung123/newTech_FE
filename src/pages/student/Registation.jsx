@@ -96,7 +96,7 @@ function StudentRegistration() {
 
         return (
           <Box display={"flex"} gap={2} alignItems={"center"}>
-            {status === 3 && !currentRegistation && (
+            {status === 4 && !currentRegistation && (
               <Button
                 variant="contained"
                 size="small"
@@ -167,29 +167,29 @@ function StudentRegistration() {
     return `${formattedDay}/${formattedMonth}/${year}`;
   }
 
-//   const handleMajorChange = async (event) => {
-//     setMajorName(event.target.value);
-//     const majorNames = event.target.value;
-//     // const selectedMajor = Majors.find((major) => major.id === selectedMajorId);
+  const handleMajorChange = async (event) => {
+    setMajorName(event.target.value);
+    const majorNames = event.target.value;
+    // const selectedMajor = Majors.find((major) => major.id === selectedMajorId);
 
-//     try {
-//       const accessToken = JSON.parse(
-//         localStorage.getItem("access_token_user")
-//       );
+    try {
+      const accessToken = JSON.parse(
+        localStorage.getItem("access_token_user")
+      );
 
-//       // Call the getTopicByMajorId function
-//       const topicsByMajor = await Usersever.getTopicByKeyword(
-//         accessToken,
-//         majorNames
-//       );
+      // Call the getTopicByMajorId function
+      const topicsByMajor = await Usersever.getTopicByKeyword(
+        accessToken,
+        majorNames
+      );
 
-//       // Update the Majors state with the data returned
-//       setDataTopic(topicsByMajor.listData);
-//     } catch (error) {
-//       console.error("Error while fetching topics by major:", error.message);
-//       // Handle error if needed
-//     }
-//   };
+      // Update the Majors state with the data returned
+      setDataTopic(topicsByMajor.listData);
+    } catch (error) {
+      console.error("Error while fetching topics by major:", error.message);
+      // Handle error if needed
+    }
+  };
 
   const handleRegisTopic = async (topicID) => {
     // You can customize the logic to get the necessary data
@@ -269,19 +269,19 @@ function StudentRegistration() {
   };
 
   useEffect(() => {
-    // const getMajorData = async () => {
-    //   try {
-    //     const accessToken = JSON.parse(
-    //       localStorage.getItem("access_token_user")
-    //     );
-    //     const MajorData = await Usersever.GetAllMajorDropDown(accessToken);
-    //     setMajors(MajorData.listData);
-    //   } catch (error) {
-    //     console.error("Error while fetching classes:", error.message);
-    //   }
-    // };
+    const getMajorData = async () => {
+      try {
+        const accessToken = JSON.parse(
+          localStorage.getItem("access_token_user")
+        );
+        const MajorData = await Usersever.GetAllMajorDropDown(accessToken);
+        setMajors(MajorData.listData);
+      } catch (error) {
+        console.error("Error while fetching classes:", error.message);
+      }
+    };
 
-    // getMajorData();
+    getMajorData();
     fetchTopicData();
   }, []);
 
@@ -302,7 +302,7 @@ function StudentRegistration() {
                 <h3>Tìm kiếm topic theo chuyên ngành</h3>
               </Box>
             </Grid>
-            {/* <Grid item xs={6}>
+            <Grid item xs={6}>
               <Select
                 // label="Lớp học"
                 fullWidth
@@ -312,12 +312,12 @@ function StudentRegistration() {
                 required
               >
                 {Majors.map((MajorItem) => (
-                  <MenuItem key={MajorItem.id} value={MajorItem.id}>
+                  <MenuItem key={MajorItem.id} value={MajorItem.name}>
                     {MajorItem.name}
                   </MenuItem>
                 ))}
               </Select>
-            </Grid> */}
+            </Grid>
           </Grid>
         </Box>
         <Box height={"70vh"} width={"100%"} mt={4}>

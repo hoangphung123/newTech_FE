@@ -4,6 +4,7 @@ import AccountManagement from "./pages/admin/AccountManagement";
 import MajorManagement from "./pages/admin/MajorManagement.jsx";
 import ClassManagement from "./pages/admin/ClassManagement.jsx";
 import TopicManagement from "./pages/admin/TopicManagement.jsx";
+import TopicManagementStudent from "./pages/student/managementStudent.jsx";
 import TopicRegistation from "./pages/teacher/topicRegistation.jsx";
 import TopicRegistationStudent from "./pages/student/Registation.jsx";
 import AcceptTopicRegis from "./pages/major_teacher/majorHead.jsx";
@@ -124,6 +125,10 @@ function App() {
             {
               path: "TopicRegistationStudent",
               element: <TopicRegistationStudent />,
+            },
+            {
+              path: "TopicManagementStudent",
+              element: <TopicManagementStudent />,
             },
           ],
         },

@@ -332,6 +332,21 @@ function TopicManagement() {
                 <div className="iconContents">
                   <FolderOpenIcon sx={{ color: "orange" }}></FolderOpenIcon>
                 </div>
+                {assignment.resultFile ? (
+                  // Render the file if it exists
+                  <a
+                    href={`http://localhost:3500/${assignment.resultFile}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View File
+                  </a>
+                ) : (
+                  // Render file input and upload button if resultFile doesn't exist
+                  <div className="fileInput">
+                    <p>No File</p>
+                  </div>
+                )}
               </div>
               <div className="contentAssigement_score">
                 <div className="iconContents">
